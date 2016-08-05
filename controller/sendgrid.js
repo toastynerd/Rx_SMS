@@ -1,17 +1,20 @@
 'use strict';
+let helper = require('sendgrid').mail,
+  from_email = new helper.Email('radcliffe.tracey@gmail.com'),
+  to_email = new helper.Email('2069312759@pm.sprint.com'),
+  subject = 'hello world',
+  content = new helper.Content('text/plain', 'AHHHHHHH'),
+  mail = new helper.Mail(from_email, subject, to_email, content);
 
-const sendGrid = require('sendgrid');
+let sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+var request = sg.emptyRequest({
+  method: 'POST',
+  path: '/v3/mail/send',
+  body: mail.toJSON()
+});
 
-function sendEmail(number, carrier, interactions){
-  sendGrid.send({
-    to: number + carrier,
-    from: 'radcliffe.tracey@gmail.com',
-    subject: 'Drug Interactions',
-    text: 'This is where the interactions will go' + interactions
-  }, function(err, json){
-    if(err) return console.log(err);
-    console.log(json);
-  });
-}
-
-sendEmail('3602694800', '@tmomail.net', 'why yes there are some. wouldnt you like to know');
+sg.API(request, function(error, response) {
+  console.log(response.statusCode);
+  console.log(response.body);
+  console.log(response.headers);
+});
