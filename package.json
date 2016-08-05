@@ -43,6 +43,7 @@
     "express": "^4.14.0",
     "jsonwebtoken": "^7.1.7",
     "mongoose": "^4.5.8",
-    "nexmo": "^1.0.0-beta-7"
+    "nexmo": "^1.0.0-beta-7",
+    "sendgrid": "^4.0.1"
   }
 }
