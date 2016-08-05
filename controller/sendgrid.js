@@ -1,11 +1,13 @@
 'use strict';
 
-module.exports = exports = function(phoneEmail, drugs){
+const carrierHandler = require('../lib/carrierhandler');
+
+module.exports = exports = function(phoneNumber, carrier, drug){
   let helper = require('sendgrid').mail,
     from_email = new helper.Email(process.env.SENDGRID_USERNAME),
-    to_email = new helper.Email(phoneEmail),
+    to_email = new helper.Email(carrierHandler(phoneNumber, carrier)),
     subject = 'hello world',
-    content = new helper.Content('text/plain', drugs),
+    content = new helper.Content('text/plain', drug),
     mail = new helper.Mail(from_email, subject, to_email, content);
 
   let sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
