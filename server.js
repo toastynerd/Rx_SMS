@@ -7,8 +7,10 @@ const serverError = require('debug')('rxsms:error');
 const mongoose = require('mongoose');
 mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/dev');
+const drugRoute = require('./routes/route');
 
 app.use(morgan('dev'));
+app.use('/api', drugRoute);
 
 app.use((err, req, res, next) => {
   serverError(err);
