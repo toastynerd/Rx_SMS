@@ -9,7 +9,7 @@ const drugSchema = new mongoose.Schema({
     unique: true,
   },
   interaction: {
-    type: String
+    type: Array
   }
 });
 
