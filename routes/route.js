@@ -5,9 +5,8 @@ const rxnormIdHandler = require('../controller/rxnormidhandler');
 let drugRouter = Router();
 
 drugRouter.get('/:name', (req, res) => {
-  let rxnormId = rxnormIdHandler(req.params.name);
-  console.log(rxnormId);
-  return res.status(200).send(rxnormId);
+  let interactions = rxnormIdHandler(req.params.name);
+  res.status(200).send(interactions);
 });
 
 
