@@ -12,6 +12,7 @@ module.exports = exports = function(rxnormId){
       interactionArr.push('{"' + interactionPairs[i].interactionConcept[1].sourceConceptItem.name + '": "' +
       interactionPairs[i].description + '"}');
     }
+    console.log(interactionArr);
     return interactionArr;
   });
 };
