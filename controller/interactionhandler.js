@@ -12,7 +12,13 @@ module.exports = exports = function(rxnormId){
       interactionArr.push('{"' + interactionPairs[i].interactionConcept[1].sourceConceptItem.name + '": "' +
       interactionPairs[i].description + '"}');
     }
-    console.log(interactionArr);
+    // Interaction array IS available here...
+    debugger;
+    console.log('interactionArr: ' + interactionArr);
     return interactionArr;
   });
+  // interaction array IS NOT available here...
+  //Need array available here to use information in our route.
+  debugger;
+  console.log('interactionArr: ' + interactionArr);
 };
