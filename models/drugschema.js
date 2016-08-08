@@ -8,9 +8,16 @@ const drugSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  interaction: {
-    type: Array
-  }
+  interactions: [
+    {
+      drugname: {
+        type: String
+      },
+      interaction: {
+        type: String
+      }
+    }
+  ]
 });
 
 module.exports = mongoose.model('Drug', drugSchema);

@@ -11,10 +11,10 @@ drugRouter.post('/:drugname', (req, res, next) => {
   .then((rxnormId) => {
     return interactionHandler(rxnormId);
   }).then((interactions) => {
-    let newDrug = new DrugSchema({'drug': req.params.drugname, 'interaction': interactions});
+    let newDrug = new DrugSchema({'drug': req.params.drugname, 'interactions': interactions});
     newDrug.save((err, drugData) => {
       if (err) return next(err);
-      res.json(drugData);
+      res.send(drugData);
     });
   });
 });

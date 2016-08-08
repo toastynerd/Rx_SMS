@@ -10,8 +10,9 @@ module.exports = exports = function(rxnormId){
       let bodyObj = JSON.parse(res.body);
       let interactionPairs = bodyObj.interactionTypeGroup[0].interactionType[0].interactionPair;
       for(var i = 0; i < interactionPairs.length; i++){
-        interactionArr.push('{"' + interactionPairs[i].interactionConcept[1].sourceConceptItem.name + '": "' +
-        interactionPairs[i].description + '"}');
+        let name = interactionPairs[i].interactionConcept[1].sourceConceptItem.name;
+        let interactions = interactionPairs[i].description;
+        interactionArr.push({'drugname': name, 'interaction': interactions});
       }
       resolve(interactionArr);
     });
