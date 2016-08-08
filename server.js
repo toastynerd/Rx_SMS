@@ -8,10 +8,12 @@ const mongoose = require('mongoose');
 const Promise = require('./lib/promise');
 mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/dev');
-const drugRoute = require('./routes/route');
+const drugRoute = require('./routes/drug_route');
+const userRoute = require('./routes/user_route');
 
 app.use(morgan('dev'));
 
+app.use('/api', userRoute);
 app.use('/api', drugRoute);
 
 app.use((err, req, res, next) => {
@@ -20,6 +22,6 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.listen(3000, () => {
-  console.log('Server up on '+ (3000));
+app.listen(3002, () => {
+  console.log('Server up on '+ (3002));
 });
