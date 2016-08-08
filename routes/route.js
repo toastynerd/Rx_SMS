@@ -11,7 +11,6 @@ drugRouter.post('/:drugname', (req, res, next) => {
   .then((rxnormId) => {
     return interactionHandler(rxnormId);
   }).then((interactions) => {
-    console.log(interactions);
     let newDrug = new DrugSchema({'drug': req.params.drugname, 'interactions': interactions});
     newDrug.save((err, drugData) => {
       if (err) return next(err);
