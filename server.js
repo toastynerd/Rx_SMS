@@ -5,6 +5,7 @@ const app = express();
 const morgan = require('morgan');
 const serverError = require('debug')('rxsms:error');
 const mongoose = require('mongoose');
+const Promise = require('./lib/promise');
 mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/dev');
 const drugRoute = require('./routes/route');
