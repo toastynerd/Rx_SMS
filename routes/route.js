@@ -1,12 +1,22 @@
 'use strict';
 
 const Router = require('express').Router;
-const rxnormIdHandler = require('../controller/rxnormidhandler');
+const interactionHandler = require('../controller/interactionhandler');
+const rxnormidHandler = require('../controller/rxnormidhandler');
+const DrugSchema = require('../models/drugschema');
 let drugRouter = Router();
 
-drugRouter.get('/:name', (req, res) => {
-  let interactions = rxnormIdHandler(req.params.name);
-  res.status(200).send(interactions);
+drugRouter.post('/:drugname', (req, res, next) => {
+  rxnormidHandler(req.params.drugname)
+  .then((rxnormId) => {
+    return interactionHandler(rxnormId);
+  }).then((interactions) => {
+    let newDrug = new DrugSchema({'drug': req.params.drugname, 'interaction': interactions});
+    newDrug.save((err, drugData) => {
+      if (err) return next(err);
+      res.json(drugData);
+    });
+  });
 });
 
 

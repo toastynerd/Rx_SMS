@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const drugSchema = new mongoose.Schema({
   drug: {
     type: String,
-    required: true,
+    required: true
     unique: true,
   },
   interaction: {
