@@ -10,7 +10,8 @@ let userRouter = Router();
 
 userRouter.post('/newUser', jsonParser, function(req, res, next) {
   let phoneNumber = req.body.phoneNumber;
-  let newUser = new UserSchema({'phoneNumber': phoneNumber});
+  let name = req.body.name;
+  let newUser = new UserSchema({'name': name, 'phoneNumber': phoneNumber});
   newUser.save((err, userData) =>{
     if (err) return next(err);
     res.send(userData);
