@@ -25,12 +25,12 @@ userDrugRouter.post('/', jsonParser, findUser, (req, res, next) => {
   req.user.newDrug(req.body.drugname).then(res.json.bind(res), HandleError(400, next));
 });
 
-userDrugRouter.put('/:userId', findUser, (req, res, next) => {
-  req.user.addDrug(req.params.userId).then(res.json.bind(res), HandleError(404, next, 'No Such User'));
+userDrugRouter.put('/:id', findUser, (req, res, next) => {
+  req.user.addDrug(req.params.id).then(res.json.bind(res), HandleError(404, next, 'No Such User'));
 });
 
-userDrugRouter.delete('/:userId', findUser, (req, res, next) => {
-  req.user.removeDrug(req.params.userId).then(res.json.bind(res), HandleError(404, next, 'No Such User'));
+userDrugRouter.delete('/:id', findUser, (req, res, next) => {
+  req.user.removeDrug(req.params.id).then(res.json.bind(res), HandleError(404, next, 'No Such User'));
 });
 
 module.exports = exports = userDrugRouter;
