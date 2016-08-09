@@ -29,6 +29,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
+    "debug": "^2.2.0",
     "eslint": "^3.2.2",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
@@ -44,6 +45,7 @@
     "jsonwebtoken": "^7.1.7",
     "mongoose": "^4.5.8",
     "nexmo": "^1.0.0-beta-7",
+    "request": "^2.74.0",
     "sendgrid": "^4.0.1"
   }
 }
