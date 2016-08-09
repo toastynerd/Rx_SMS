@@ -42,6 +42,18 @@ describe('testing different routes for our server ', () => {
         done();
       });
   });
+
+  it('should not create a new user', (done) => {
+    request('localhost:4000')
+      .post('/api/user/newUser')
+      .send({phoneNumber:'123456078'})
+      .end((err, res)=>{
+        expect(res).to.have.status(400);
+        expect(res.text).to.have.string('Nope');
+        done();
+      });
+  });
+
   it('should GET a new user', (done) => {
     request('localhost:4000')
       .get('/api/user/' + userID)

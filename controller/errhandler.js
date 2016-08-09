@@ -7,5 +7,5 @@ module.exports = exports = function(statusCode, cb, message) {
     message = message || error.message;
     errorMsg(error);
     return cb({error, message, statusCode});
-  };
+  };  
 };
