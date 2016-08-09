@@ -12,7 +12,7 @@ process.env.DB_SERVER = TEST_DB_SERVER;
 
 let app = require('./test_server');
 
-let server, userID;
+let server, userID, drugId;
 
 describe('testing different routes for our server ', () => {
   before((done) =>{
@@ -85,4 +85,31 @@ describe('testing different routes for our server ', () => {
         done();
       });
   });
+
+  it('should POST a new drug', (done) =>{
+    request('localhost:4000')
+      .post('/api/drug/newDrug')
+      .send({drug: 'zocor'})
+      .end((err, res)=>{
+        drugId = res.body._id;
+        console.log('drugz are bad' + drugId);
+        expect(err).to.eql(null);
+        expect(res).to.have.status(200);
+        expect(res.body.drug).to.eql('zocor');
+        done();
+      });
+  });
+
+  it('should GET a drug', (done) =>{
+    request('localhost:4000')
+      .get('/api/drug/' + drugId)
+      .end((err, res)=>{
+        expect(err).to.eql(null);
+        expect(res).to.have.status(200);
+        expect(res.body.drug).to.eql('zocor');
+        done();
+      });
+  });
+
+  
 });
