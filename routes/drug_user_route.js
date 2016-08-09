@@ -25,8 +25,8 @@ userDrugRouter.post('/', jsonParser, findUser, (req, res, next) => {
   req.user.newDrug(req.body.drugname).then(res.json.bind(res), HandleError(400, next));
 });
 
-userDrugRouter.put('/:id', findUser, (req, res, next) => {
-  req.user.addDrug(req.params.id).then(res.json.bind(res), HandleError(404, next, 'No Such User'));
+userDrugRouter.put('/:drugId', findUser, (req, res, next) => {
+  req.user.addDrug(req.params.drugId).then(res.json.bind(res), HandleError(404, next, 'No Such User'));
 });
 
 userDrugRouter.delete('/:id', findUser, (req, res, next) => {
