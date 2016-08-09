@@ -3,7 +3,6 @@
 const mongoose = require('mongoose');
 
 const drugSchema = new mongoose.Schema({
-  userId: String,
   drug: {
     type: String,
     required: true,
@@ -18,7 +17,8 @@ const drugSchema = new mongoose.Schema({
         type: String
       }
     }
-  ]
+  ],
+  userId: String
 });
 
 module.exports = mongoose.model('Drug', drugSchema);
