@@ -11,12 +11,14 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/dev');
 const drugRoute = require('./routes/drug_route');
 const userRoute = require('./routes/user_route');
 const homeRoute = require('./routes/home_route');
+const parseRoute = require('./routes/parse_route.js');
 
 app.use(morgan('dev'));
 
 app.use('/', homeRoute);
 app.use('/api/user', userRoute);
 app.use('/api/drug', drugRoute);
+app.use('/inbound', parseRoute);
 
 app.use((err, req, res, next) => {
   serverError(err);
