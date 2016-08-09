@@ -10,9 +10,11 @@ mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/dev');
 const drugRoute = require('./routes/drug_route');
 const userRoute = require('./routes/user_route');
+const homeRoute = require('./routes/home_route');
 
 app.use(morgan('dev'));
 
+app.use('/', homeRoute);
 app.use('/api/user', userRoute);
 app.use('/api/drug', drugRoute);
 
