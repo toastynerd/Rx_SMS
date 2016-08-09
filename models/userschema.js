@@ -18,4 +18,16 @@ UserSchema.methods.newDrug = function(drugData){
   return drug.save();
 };
 
+UserSchema.methods.addDrug = function(drugId) {
+  return DrugSchema.findOneAndUpdate({'_id': drugId}, {userId: this._id});
+};
+
+UserSchema.methods.getAllDrugs = function() {
+  return DrugSchema.find({userId: this._id});
+};
+
+UserSchema.methods.removeDrug = function(drugId) {
+  return DrugSchema.findOneAndUpdate({'_id': drugId}, {userId: null});
+};
+
 module.exports = mongoose.model('User', UserSchema);

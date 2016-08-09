@@ -2,5 +2,11 @@
 
 [![Build Status](https://travis-ci.org/aliza89p/Rx_SMS.svg?branch=staging)](https://travis-ci.org/aliza89p/Rx_SMS)
 
-##Instructions
--To create a user, run in the terminal: echo '{"phoneNumber":"1234567898"}' | http :3002/api/user
+## Developers  
+- Aliza Pilisuk  
+- Tracey Radcliffe  
+- Tre Cain  
+
+## Instructions  
+- To create a new user, run: http post :3000/user phoneNumber=<number>  
+- To create a new drug, run: http post :3000/drug drug=<drug>  

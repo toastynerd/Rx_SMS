@@ -22,6 +22,6 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.listen(3002, () => {
-  console.log('Server up on '+ (3002));
+app.listen(3000, () => {
+  console.log('Server up on 3000');
 });

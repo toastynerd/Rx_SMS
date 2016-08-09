@@ -1,16 +1,14 @@
 'use strict';
 
 const Router = require('express').Router;
-const DrugSchema = require('../models/drugschema');
+// const DrugSchema = require('../models/drugschema');
 const UserSchema = require('../models/userschema');
-const drugUser = require('./drug_user_route');
+const drugUserRouter = require('./drug_user_route');
 const jsonParser = require('body-parser').json();
-const ErrorHandler = require('../controller/errhandler');
 
 let userRouter = Router();
 
-userRouter.post('/user', jsonParser, (req, res, next) =>{
-  // let handleBadValidation = ErrorHandler(400, next);
+userRouter.post('/user', jsonParser, (req, res, next) => {
   let phoneNumber = req.body.phoneNumber;
   let newUser = new UserSchema({'phoneNumber': phoneNumber});
   newUser.save((err, userData) =>{
@@ -18,5 +16,7 @@ userRouter.post('/user', jsonParser, (req, res, next) =>{
     res.send(userData);
   });
 });
+
+userRouter.use('/:userId/drug', drugUserRouter);
 
 module.exports = exports = userRouter;
