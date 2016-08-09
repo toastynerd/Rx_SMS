@@ -8,7 +8,7 @@ const DrugSchema = require('../models/drugschema');
 const jsonParser = require('body-parser').json();
 let drugRouter = Router();
 
-drugRouter.post('/newDrug', jsonParser, (req, res, next) => {
+drugRouter.post('/newDrug', jsonParser, function(req, res, next) {
   rxnormidHandler(req.body.drug)
   .then((rxnormId) => {
     return interactionHandler(rxnormId);
@@ -21,7 +21,7 @@ drugRouter.post('/newDrug', jsonParser, (req, res, next) => {
   });
 });
 
-drugRouter.get('/:drugId', (req, res, next) => {
+drugRouter.get('/:drugId', function(req, res, next) {
   let DBError = HandleError(400, next, 'invalid id');
   let Err404 = HandleError(404, next);
   DrugSchema.findOne({'_id': req.params.id}).then((data) => {
@@ -30,7 +30,7 @@ drugRouter.get('/:drugId', (req, res, next) => {
   }, DBError);
 });
 
-drugRouter.get('/allDrugs', (req, res, next) => {
+drugRouter.get('/allDrugs', function(req, res, next) {
   DrugSchema.find().then(res.json.bind(res), HandleError(500, next, 'Server Error'));
 });
 
