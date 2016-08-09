@@ -25,6 +25,10 @@ drugRouter.post('/newDrug', jsonParser, function(req, res, next) {
   });
 });
 
+drugRouter.get('/allDrugs', function(req, res, next) {
+  DrugSchema.find().then(res.json.bind(res), HandleError(500, next, 'Server Error'));
+});
+
 drugRouter.get('/:drugId', function(req, res, next) {
   let DBError = HandleError(400, next, 'invalid id');
   let Err404 = HandleError(404, next);
@@ -32,10 +36,6 @@ drugRouter.get('/:drugId', function(req, res, next) {
     if (!data) return next(Err404(new Error('drug not found.')));
     res.json(data);
   }, DBError);
-});
-
-drugRouter.get('/allDrugs', function(req, res, next) {
-  DrugSchema.find().then(res.json.bind(res), HandleError(500, next, 'Server Error'));
 });
 
 module.exports = exports = drugRouter;
