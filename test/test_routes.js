@@ -65,4 +65,24 @@ describe('testing different routes for our server ', () => {
         done();
       });
   });
+
+  it('should not GET a new user', (done) => {
+    request('localhost:4000')
+      .get('/api/user/1234')
+      .end((err, res)=>{
+        expect(res).to.have.status(400);
+        expect(res.body).to.have.string('invalid id');
+        done();
+      });
+  });
+
+  it('should GET all users', (done) => {
+    request('localhost:4000')
+      .get('/api/user/allUsers')
+      .end((err, res)=>{
+        expect(err).to.eql(null);
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
 });
