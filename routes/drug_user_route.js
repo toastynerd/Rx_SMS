@@ -17,19 +17,20 @@ let findUser = function(req, res, next) {
 };
 
 userDrugRouter.get('/', findUser, (req, res, next) => {
-  req.user.getAllDrugs().then(res.json.bind(res), HandleError(500, next, 'server error'));
+  req.user.getAllDrugs()
+    .then(res.json.bind(res), HandleError(500, next, 'server error'));
 });
 
 userDrugRouter.post('/', jsonParser, findUser, (req, res, next) => {
   req.user.newDrug(req.body.drugname).then(res.json.bind(res), HandleError(400, next));
 });
 
-userDrugRouter.put('/:id', findUser, (req, res, next) => {
-  req.user.addDrug(req.params.id).then(res.json.bind(res), HandleError(404, next, 'No Such User'));
+userDrugRouter.put('/:userId', findUser, (req, res, next) => {
+  req.user.addDrug(req.params.userId).then(res.json.bind(res), HandleError(404, next, 'No Such User'));
 });
 
-userDrugRouter.delete('/:id', findUser, (req, res, next) => {
-  req.user.removeDrug(req.params.id).then(res.json.bind(res), HandleError(404, next, 'No Such User'));
+userDrugRouter.delete('/:userId', findUser, (req, res, next) => {
+  req.user.removeDrug(req.params.userId).then(res.json.bind(res), HandleError(404, next, 'No Such User'));
 });
 
 module.exports = exports = userDrugRouter;
