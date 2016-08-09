@@ -9,6 +9,10 @@ const jsonParser = require('body-parser').json();
 let drugRouter = Router();
 
 drugRouter.post('/newDrug', jsonParser, function(req, res, next) {
+  let errz = HandleError(400, next, 'invalid id');
+  if(!req.body.drug){
+    return errz();
+  }
   rxnormidHandler(req.body.drug)
   .then((rxnormId) => {
     return interactionHandler(rxnormId);
@@ -24,7 +28,7 @@ drugRouter.post('/newDrug', jsonParser, function(req, res, next) {
 drugRouter.get('/:drugId', function(req, res, next) {
   let DBError = HandleError(400, next, 'invalid id');
   let Err404 = HandleError(404, next);
-  DrugSchema.findOne({'_id': req.params.id}).then((data) => {
+  DrugSchema.findOne({'_id': req.params.drugId}).then((data) => {
     if (!data) return next(Err404(new Error('drug not found.')));
     res.json(data);
   }, DBError);
