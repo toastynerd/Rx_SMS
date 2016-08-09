@@ -13,8 +13,8 @@ const userRoute = require('./routes/user_route');
 
 app.use(morgan('dev'));
 
-app.use('/api', userRoute);
-app.use('/api', drugRoute);
+app.use('/api/user', userRoute);
+app.use('/api/drug', drugRoute);
 
 app.use((err, req, res, next) => {
   serverError(err);
