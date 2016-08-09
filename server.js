@@ -7,7 +7,7 @@ const serverError = require('debug')('rxsms:error');
 const mongoose = require('mongoose');
 const Promise = require('./lib/promise');
 mongoose.Promise = Promise;
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/dev');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/dev');
 const drugRoute = require('./routes/drug_route');
 const userRoute = require('./routes/user_route');
 const homeRoute = require('./routes/home_route');
