@@ -8,7 +8,7 @@ const jsonParser = require('body-parser').json();
 
 let userRouter = Router();
 
-userRouter.post('/newUser', jsonParser, (req, res, next) => {
+userRouter.post('/newUser', jsonParser, function(req, res, next) {
   let phoneNumber = req.body.phoneNumber;
   let newUser = new UserSchema({'phoneNumber': phoneNumber});
   newUser.save((err, userData) =>{
@@ -17,11 +17,11 @@ userRouter.post('/newUser', jsonParser, (req, res, next) => {
   });
 });
 
-userRouter.get('/allUsers', (req, res, next) => {
+userRouter.get('/allUsers', function(req, res, next) {
   UserSchema.find().then(res.json.bind(res), HandleError(500, next, 'Server Error'));
 });
 
-userRouter.get('/:userId', (req, res, next) => {
+userRouter.get('/:userId', function(req, res, next) {
   let DBError = HandleError(400, next, 'invalid id');
   let Err404 = HandleError(404, next);
   UserSchema.findOne({'_id': req.params.userId}).then((data) => {
