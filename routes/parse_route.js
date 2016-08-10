@@ -6,7 +6,6 @@ const HandleError = require('../controller/errhandler');
 let parseRouter = Router();
 
 parseRouter.post('/', jsonParser, function(req, res, next) {
-  console.log('inboundxxxxxx');
   let gridSchema = new GridSchema({'text': req.body.text});
   gridSchema.save((err, grid) => {
     if (err) return next(err);
