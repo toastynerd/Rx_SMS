@@ -14,16 +14,16 @@ const UserSchema = new mongoose.Schema({
     required: true
   },
   phoneEmail: String,
-  basic: {
-    username: {
-      type: String,
-      required: true
-    },
-    password: {
-      type: String,
-      required: true
-    }
-  }
+  // basic: {
+  //   username: {
+  //     type: String,
+  //     // required: true
+  //   },
+  //   password: {
+  //     type: String,
+  //     // required: true
+  //   }
+  // }
 });
 
 UserSchema.methods.newDrug = function(drugData){

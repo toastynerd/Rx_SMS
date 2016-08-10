@@ -1,7 +1,6 @@
 'use strict';
 const Router = require('express').Router;
 const GridSchema = require('../models/sendgridschema');
-// const UserSchema = require('../models/userschema');
 const jsonParser = require('body-parser').json();
 const sendGrid = require('../lib/sendgrid');
 const HandleError = require('../controller/errhandler');
@@ -20,15 +19,6 @@ parseRouter.post('/', jsonParser, function(req, res, next) {
   });
   sendGrid(phoneEmail);
 });
-
-// parseRouter.get('/:phoneEmail', function(req, res, next) {
-//   UserSchema.findOne({'phoneEmail': req.params.phoneEmail})
-//     .then((user) => {
-//       if (!user) return HandleError(404, next)(new Error('User Not Found'));
-//       req.user = user._id;
-//       next();
-//     }, HandleError(404, next, 'No Such User'));
-// });
 
 parseRouter.get('/', function(req, res, next) {
   GridSchema.find().then(res.json.bind(res), HandleError(500, next, 'Server error!'));

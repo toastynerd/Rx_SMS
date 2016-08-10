@@ -11,7 +11,7 @@ let userRouter = Router();
 
 userRouter.post('/newUser', jsonParser, function(req, res, next) {
   let errz = HandleError(400, next, 'Nope');
-  if(!req.body.name || !req.body.phoneNumber){
+  if(!req.body.carrier || !req.body.phoneNumber){
     return errz();
   }
   let email = carrierHandler(req.body.phoneNumber, req.body.carrier);
