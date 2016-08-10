@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/aliza89p/Rx_SMS.svg?branch=staging)](https://travis-ci.org/aliza89p/Rx_SMS)
 
+<b>Disclaimer</b>: Rx_SMS is intended for educational purposes only. For advice on medications, please consult with a qualified physician.
+
 ## Developers  
 - Aliza Pilisuk  
 - Tracey Radcliffe  
