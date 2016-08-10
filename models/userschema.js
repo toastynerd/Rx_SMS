@@ -1,15 +1,28 @@
 'use strict';
 
 const mongoose = require('mongoose');
-
 const DrugSchema = require('./drugschema');
 
 const UserSchema = new mongoose.Schema({
-  name: String,
   phoneNumber: {
     type: String,
     required: true,
     unique: true,
+  },
+  carrier: {
+    type: String,
+    required: true
+  },
+  phoneEmail: String,
+  basic: {
+    username: {
+      type: String,
+      required: true
+    },
+    password: {
+      type: String,
+      required: true
+    }
   }
 });
 
