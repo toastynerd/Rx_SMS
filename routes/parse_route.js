@@ -7,7 +7,7 @@ let parseRouter = Router();
 
 parseRouter.post('/', jsonParser, function(req, res, next) {
   console.log('email body: ', req.body);
-  let gridSchema = new GridSchema({'text': req.body.TextBody});
+  let gridSchema = new GridSchema({'text': req.body.HtmlBody});
   gridSchema.save((err, grid) => {
     if (err) return next(err);
     res.json(grid);
