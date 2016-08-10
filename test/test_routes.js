@@ -16,8 +16,8 @@ let server, userID, drugId;
 
 describe('testing different routes for our server ', () => {
   before((done) =>{
-    server = app.listen(4000, ()=>{
-      console.log('Server on 4000');
+    server = app.listen(4001, ()=>{
+      console.log('Server on 4001');
       done();
     });
   });
@@ -30,7 +30,7 @@ describe('testing different routes for our server ', () => {
     });
   });
   it('should create a new user', (done) => {
-    request('localhost:4000')
+    request('localhost:4001')
       .post('/api/user/newUser')
       .send({name: 'Tracey', phoneNumber:'123456078'})
       .end((err, res)=>{
@@ -44,7 +44,7 @@ describe('testing different routes for our server ', () => {
   });
 
   it('should not create a new user', (done) => {
-    request('localhost:4000')
+    request('localhost:4001')
       .post('/api/user/newUser')
       .send({phoneNumber:'123456078'})
       .end((err, res)=>{
@@ -55,7 +55,7 @@ describe('testing different routes for our server ', () => {
   });
 
   it('should GET a new user', (done) => {
-    request('localhost:4000')
+    request('localhost:4001')
       .get('/api/user/' + userID)
       .end((err, res)=>{
         expect(err).to.eql(null);
@@ -67,7 +67,7 @@ describe('testing different routes for our server ', () => {
   });
 
   it('should not GET a new user', (done) => {
-    request('localhost:4000')
+    request('localhost:4001')
       .get('/api/user/1234')
       .end((err, res)=>{
         expect(res).to.have.status(400);
@@ -77,7 +77,7 @@ describe('testing different routes for our server ', () => {
   });
 
   it('should GET all users', (done) => {
-    request('localhost:4000')
+    request('localhost:4001')
       .get('/api/user/allUsers')
       .end((err, res)=>{
         expect(err).to.eql(null);
@@ -87,7 +87,7 @@ describe('testing different routes for our server ', () => {
   });
 
   it('should POST a new drug', (done) =>{
-    request('localhost:4000')
+    request('localhost:4001')
       .post('/api/drug/newDrug')
       .send({drug: 'zocor'})
       .end((err, res)=>{
@@ -101,7 +101,7 @@ describe('testing different routes for our server ', () => {
   });
 
   it('should GET a drug', (done) =>{
-    request('localhost:4000')
+    request('localhost:4001')
       .get('/api/drug/' + drugId)
       .end((err, res)=>{
         expect(err).to.eql(null);
@@ -112,7 +112,7 @@ describe('testing different routes for our server ', () => {
   });
 
   // it('should not POST a new drug', (done) =>{
-  //   request('localhost:4000')
+  //   request('localhost:4001')
   //     .post('/api/drug/newDrug')
   //     .send({drug: 'nope'})
   //     .end((err, res)=>{
