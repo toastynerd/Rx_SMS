@@ -15,8 +15,7 @@ userRouter.post('/newUser', jsonParser, function(req, res, next) {
     return errz();
   }
   let email = carrierHandler(req.body.phoneNumber, req.body.carrier);
-  let name = req.body.name;
-  let newUser = new UserSchema({'name': name, 'carrier': req.body.carrier, 'phoneNumber': req.body.phoneNumber, 'phoneEmail': email});
+  let newUser = new UserSchema({'phoneNumber': req.body.phoneNumber, 'carrier': req.body.carrier, 'phoneEmail': email});
   newUser.save((err, userData) =>{
     if (err) return next(errz());
     res.send(userData);
