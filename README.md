@@ -19,9 +19,7 @@
 
 5. First tab: `mongodb --dbpath db`
 
-6. Second tab: `nodemon server.js`  
-
-7. Third tab: CRUD requests. See below...  
+6. Second tab: `nodemon server.js`   
 
 ### CRUD Requests  
 
