@@ -20,7 +20,7 @@ drugRouter.post('/newDrug', jsonParser, function(req, res, next) {
     let newDrug = new DrugSchema({'drug': req.body.drug, 'interactions': interactions});
     newDrug.save((err, drugData) => {
       if (err) return next(err);
-      res.send('drug: ' + drugData.drug + '\n_id: ' + drugData._id);
+      res.send(drugData);
     });
   });
 });
