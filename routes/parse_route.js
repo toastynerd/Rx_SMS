@@ -6,8 +6,8 @@ const HandleError = require('../controller/errhandler');
 let parseRouter = Router();
 
 parseRouter.post('/', jsonParser, function(req, res, next) {
-  let preSplit = req.body.HtmlBody.toString().split('<PRE> ');
-  let afterSplit = preSplit[1].split(' </PRE>');
+  let preSplit = req.body.HtmlBody.toString().split('<PRE>');
+  let afterSplit = preSplit[1].split('</PRE>');
   let content = afterSplit[0];
   let phoneNumber = req.body.From;
   console.log('email body: ', content);
