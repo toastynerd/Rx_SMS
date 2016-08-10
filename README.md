@@ -11,7 +11,7 @@
 ### Setup  
 1. `git clone https://github.com/aliza89p/Rx_SMS.git`  
 
-2. `cd` into `./Rx_SMS` directory  
+2. `cd` into `Rx_SMS` directory  
 
 3. `npm install`  
 
