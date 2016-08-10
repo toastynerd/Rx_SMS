@@ -28,3 +28,23 @@ interactionRouter.get('/interactions/:userId/:drugName', function(req, res, next
     return HandleError(404, next)(new Error('No interactions found'));
   });
 });
+
+interactionRouter.get('/interactions/:userId', function(req, res, next) {
+  DrugSchema.find({'userId': req.params.userId})
+  .then((drugs) => {
+    if (!drugs) return HandleError(404, next)(new Error('Drugs not found'));
+    var drugArray = [];
+    drugs.forEach(function(item) {
+      drugArray.push('DRUGS INTERACTING WITH ' + item.drug.toUpperCase() + ':');
+      item.interactions.forEach(function(q) {
+        drugArray.push(q.drugname);
+      });
+    });
+    if (drugArray.length > 0) {
+      let uniqueArr = unique(drugArray);
+      res.json(uniqueArr);
+      next();
+    }
+    return HandleError(404, next)(new Error('No interactions found'));
+  });
+});
