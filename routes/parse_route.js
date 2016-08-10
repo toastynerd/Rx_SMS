@@ -22,10 +22,4 @@ parseRouter.get('/', function(req, res, next) {
   GridSchema.find().then(res.json.bind(res), HandleError(500, next, 'Server error!'));
 });
 
-
-parseRouter.delete('/:id', function(req, res, next) {
-  GridSchema.remove({'_id': req.params.id});
-  next();
-});
-
 module.exports = exports = parseRouter;
