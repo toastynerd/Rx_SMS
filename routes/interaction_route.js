@@ -8,7 +8,7 @@ const unique = function(a) {
 };
 
 interactionRouter.get('/interactions/:userId/:drugName', function(req, res, next) {
-  let drugName = req.params.drugName;
+  let drugName = req.params.drugName.split('%').join(' ');
   DrugSchema.find({'userId': req.params.userId})
   .then((drugs) => {
     if (!drugs) return HandleError(404, next)(new Error('Drugs not found'));
