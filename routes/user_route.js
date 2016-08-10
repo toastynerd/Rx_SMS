@@ -5,6 +5,7 @@ const HandleError = require('../controller/errhandler');
 const UserSchema = require('../models/userschema');
 const drugUserRouter = require('./drug_user_route');
 const jsonParser = require('body-parser').json();
+const carrierHandler = require('../controller/carrierhandler');
 
 let userRouter = Router();
 
@@ -13,9 +14,9 @@ userRouter.post('/newUser', jsonParser, function(req, res, next) {
   if(!req.body.name || !req.body.phoneNumber){
     return errz();
   }
-  let phoneNumber = req.body.phoneNumber;
+  let email = carrierHandler(req.body.phoneNumber, req.body.carrier);
   let name = req.body.name;
-  let newUser = new UserSchema({'name': name, 'phoneNumber': phoneNumber});
+  let newUser = new UserSchema({'name': name, 'carrier': req.body.carrier, 'phoneNumber': req.body.phoneNumber, 'phoneEmail': email});
   newUser.save((err, userData) =>{
     if (err) return next(errz());
     res.send(userData);

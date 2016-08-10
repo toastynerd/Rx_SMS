@@ -6,11 +6,16 @@ const DrugSchema = require('./drugschema');
 
 const UserSchema = new mongoose.Schema({
   name: String,
+  carrier: {
+    type: String,
+    required: true
+  },
   phoneNumber: {
     type: String,
     required: true,
     unique: true,
-  }
+  },
+  phoneEmail: String
 });
 
 UserSchema.methods.newDrug = function(drugData){
