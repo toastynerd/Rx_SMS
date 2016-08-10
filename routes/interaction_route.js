@@ -4,24 +4,24 @@ const DrugSchema = require('../models/drugschema');
 const HandleError = require('../controller/errhandler');
 let interactionRouter = module.exports = exports = Router();
 
-// let findInteractions = function(req, res, next) {
-//
-// }
-
-interactionRouter.get('/:userId', function(req, res, next) {
+interactionRouter.get('/interactions/:userId/:drugName', function(req, res, next) {
+  let drugName = req.params.drugName;
   DrugSchema.find({'userId': req.params.userId})
   .then((drugs) => {
     if (!drugs) return HandleError(404, next)(new Error('Drugs not found'));
-    res.json(drugs);
-    next();
-  });
-});
-
-interactionRouter.get('/:drugName', function(req, res, next) {
-  DrugSchema.find({'interactions':{'drugname':req.params.drugName}})
-  .then((drugs) => {
-    if (!drugs) return HandleError(404, next)(new Error('Drugs not found'));
-    res.json(drugs);
-    next();
+    var drugArray = [];
+    drugs.forEach(function(item) {
+      item.interactions.forEach(function(q) {
+        if (q.drugname === drugName){
+          drugArray.push(q.interaction);
+          console.log('q.drugname', drugArray);
+        }
+      });
+    });
+    if (drugArray.length > 0) {
+      res.json(drugArray.toString());
+      next();
+    }
+    return HandleError(404, next)(new Error('Drugs not found'));
   });
 });
