@@ -22,6 +22,9 @@ drugRouter.post('/newDrug', jsonParser, function(req, res, next) {
       if (err) return next(err);
       res.send(drugData);
     });
+  }).catch((e) =>{
+    e = HandleError(400, next, 'Drug not found in the database');
+    return e();
   });
 });
 
