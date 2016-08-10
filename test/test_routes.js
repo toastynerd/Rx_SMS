@@ -111,5 +111,14 @@ describe('testing different routes for our server ', () => {
       });
   });
 
-  
+  // it('should not POST a new drug', (done) =>{
+  //   request('localhost:4000')
+  //     .post('/api/drug/newDrug')
+  //     .send({drug: 'nope'})
+  //     .end((err, res)=>{
+  //       expect(res).to.have.status(400);
+  //       done();
+  //     });
+  // });
+
 });
