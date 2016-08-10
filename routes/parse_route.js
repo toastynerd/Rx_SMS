@@ -6,8 +6,12 @@ const HandleError = require('../controller/errhandler');
 let parseRouter = Router();
 
 parseRouter.post('/', jsonParser, function(req, res, next) {
-  console.log('email body: ', req.body.HtmlBody);
-  let gridSchema = new GridSchema({'text': req.body.HtmlBody});
+  let preSplit = req.body.HtmlBody.toString().split('<PRE>');
+  let afterSplit = preSplit[1].split('</PRE>');
+  let content = afterSplit[0];
+  let phoneNumber = req.body.From;
+  console.log('email body: ', content);
+  let gridSchema = new GridSchema({'phoneNumber': phoneNumber, 'text': content});
   gridSchema.save((err, grid) => {
     if (err) return next(err);
     res.json(grid);

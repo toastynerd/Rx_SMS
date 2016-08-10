@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 
 const gridSchema = new mongoose.Schema({
+  phoneNumber: String,
   text: String
 });
 
