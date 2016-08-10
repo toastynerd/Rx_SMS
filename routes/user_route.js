@@ -9,16 +9,21 @@ const jsonParser = require('body-parser').json();
 let userRouter = Router();
 
 userRouter.post('/newUser', jsonParser, function(req, res, next) {
+  let errz = HandleError(400, next, 'Nope');
+  if(!req.body.name || !req.body.phoneNumber){
+    return errz();
+  }
   let phoneNumber = req.body.phoneNumber;
-  let newUser = new UserSchema({'phoneNumber': phoneNumber});
+  let name = req.body.name;
+  let newUser = new UserSchema({'name': name, 'phoneNumber': phoneNumber});
   newUser.save((err, userData) =>{
-    if (err) return next(err);
+    if (err) return next(errz());
     res.send(userData);
   });
 });
 
 userRouter.get('/allUsers', function(req, res, next) {
-  UserSchema.find().then(res.json.bind(res), HandleError(500, next, 'Server Error'));
+  UserSchema.find().then(res.json.bind(res), HandleError(400, next, 'Server Error'));
 });
 
 userRouter.get('/:userId', function(req, res, next) {
