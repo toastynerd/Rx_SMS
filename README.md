@@ -8,10 +8,14 @@
 - Tre Cain  
 
 ## Instructions  
-- To create a new user, run post request with a new phone number: http post :3000/newUser phoneNumber=1234567890  
-- To get a user, run get request with a user's id: http get :3000/01234
-- To get all users, run: http get :3000/allUsers
-- To create a new drug, run a post request with a new drug: http post :3000/newDrug drug=valium  
-- To get a drug, run a get request with a drug's id: http get :3000/54321
-- To get all drugs, run: http get :3000/allDrugs  
-- To add user to drug, run: http put :3000/api/user/$UserId/drug/$DrugId
+- To create a new user, run post request with a new phone number: http POST rx-sms.herokuapp.com/api/user/newUser name=$YourName phoneNumber=$YourPhoneNumber
+- To get a user, run get request with a user's id: http GET rx-sms.herokuapp.com/api/user/$UserId
+- To get all users, run: http GET rx-sms.herokuapp.com/api/user/allUsers
+- To create a new drug, run a post request with a new drug: http POST rx-sms.herokuapp.com/api/drug/newDrug drug=$Drug  
+- To get a drug, run a get request with a drug's id: http GET rx-sms.herokuapp.com/api/drug/$DrugId
+- To get all drugs, run: http GET rx-sms.herokuapp.com/api/drug/allDrugs  
+- To save a medication to a user, run: http PUT rx-sms.herokuapp.com/api/user/$UserId/drug/$DrugId  
+- To get a list of all drug names that interact with a user's saved drugs, run: http GET rx-sms.herokuapp.com/api/interactions/$UserId  
+- To check for specific interactions between a new drug and a users saved drugs, run: http GET rx-sms.herokuapp.com/api/interactions/$UserId/$NewDrug
+
+- Note: Replace $Content with your personalized information
