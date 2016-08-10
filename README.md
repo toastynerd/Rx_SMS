@@ -8,17 +8,22 @@
 - Tre Cain  
 
 ## Instructions  
+### Setup  
 1. `git clone https://github.com/aliza89p/Rx_SMS.git`  
 
-2. `cd` into `Rx_SMS` directory
+2. `cd` into `./Rx_SMS` directory  
 
 3. `npm install`  
 
-4. First tab: `mongodb --dbpath db`
+4. `mkdir db`  
 
-5. Second tab: `nodemon server.js`  
+5. First tab: `mongodb --dbpath db`
 
-6. Third tab: CRUD requests. See below...
+6. Second tab: `nodemon server.js`  
+
+7. Third tab: CRUD requests. See below...  
+
+### CRUD Requests  
 
 NOTE: Replace ``$Content`` with your personalized information
 
