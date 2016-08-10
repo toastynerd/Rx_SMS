@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const DrugSchema = require('./drugschema');
 
 const UserSchema = new mongoose.Schema({
+  name: String,
   phoneNumber: {
     type: String,
     required: true,
