@@ -18,8 +18,8 @@ drugRouter.post('/newDrug', jsonParser, jwt_auth, function(req, res, next) {
   .then((rxnormId) => {
     return interactionHandler(rxnormId);
   }).then((interactions) => {
-    req.body.userId = req.user._id;//NOT POSTING userId
-    let newDrug = new DrugSchema({'drug': req.body.drug, 'interactions': interactions});
+    req.body.userId = req.user._id;
+    let newDrug = new DrugSchema({'drug': req.body.drug, 'interactions': interactions, 'userId': req.body.userId});
     newDrug.save((err, drugData) => {
       if (err) return next(err);
       res.send(drugData);

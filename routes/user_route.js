@@ -22,7 +22,11 @@ userRouter.post('/newUser', jsonParser, function(req, res, next) {
   newUser.basic.password = req.body.password;
   newUser.createHash(req.body.password)
     .then((token) => {
-      newUser.save().then(() =>{ res.json(token);}, HandleError(400, next));
+      newUser.save().then(() =>{
+        console.log(res.body);
+        console.log(newUser);
+        res.json(token);
+      }, HandleError(400, next));
     }, HandleError(401, next, 'Server Error'));
 });
 
@@ -37,7 +41,6 @@ userRouter.get('/signin', BasicHTTP, function(req, res, next) {
   UserSchema.findOne({'basic.username': req.auth.username})
     .then((user) => {
       if (!user) return Err404();
-      debugger;
       user.comparePass(req.auth.password)
         .then(res.json.bind(res), Err404);
     }, DBError);
