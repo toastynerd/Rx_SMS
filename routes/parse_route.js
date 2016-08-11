@@ -40,7 +40,7 @@ const getInteractions = function(phoneEmail, drug) {
 parseRouter.post('/', jsonParser, function(req, res, next) {
   let testingIncoming = req.body.HtmlBody.toString();
   let removeHtml = testingIncoming.replace(/<[^>]*>?/gm, '');
-  let removeTmo = removeHtml.replace(/nbsp;/gm,'');
+  let removeTmo = removeHtml.replace(/&nbsp;/gm,'');
   let removeDashes = removeTmo.replace(/[-_]/gm, '');
   let removeNewLines = removeDashes.replace(/(\r\n|\n|\r|\t)/gm, '');
   let sprint = removeNewLines.replace('Sent from my mobile.', '');
