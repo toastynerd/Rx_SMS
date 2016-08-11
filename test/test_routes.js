@@ -45,7 +45,7 @@ describe('testing different routes for our server ', () => {
 
   it('should not create a new user', (done) => {
     request('localhost:4001')
-      .post('/api/user/newUser')
+      .post('/api/user/signup')
       .send({phoneNumber:'123456078'})
       .end((err, res)=>{
         expect(res).to.have.status(400);

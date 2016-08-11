@@ -1,7 +1,6 @@
 'use strict';
 
 const mongoose = require('mongoose');
-// const jwt_auth = require('../lib/jwt_auth');
 const serverError = require('debug')('rxsms:test_error');
 mongoose.connect('mongodb://localhost/routes_tests');
 let app = require('express')();
