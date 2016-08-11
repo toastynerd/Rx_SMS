@@ -29,19 +29,19 @@ describe('testing different routes for our server ', () => {
       });
     });
   });
-  it('should create a new user', (done) => {
+  it('should POST a new user', (done) => {
     request('localhost:4001')
       .post('/api/user/signup')
       .send({phoneNumber:'1234456', carrier:'sprint', username:'me1', password:'yep'})
       .end((err, res)=>{
         expect(err).to.eql(null);
-        expect(res).to.have.status(200);
+        expect(res).tao.have.status(200);
         expect(res.body).to.have.property('token');
         done();
       });
   });
 
-  it('should not create a new user', (done) => {
+  it('should not POST a new user', (done) => {
     request('localhost:4001')
       .post('/api/user/signup')
       .send({phoneNumber:'123456078'})
@@ -122,7 +122,7 @@ describe('testing different routes for our server ', () => {
   });
 
 
-  it('should return interaction results between sent drug and saved drugs from parse route', (done) =>{
+  it('should GET data form the homepage', (done) =>{
     request('localhost:4001')
       .get('/')
       .end((err, res) =>{
@@ -131,5 +131,7 @@ describe('testing different routes for our server ', () => {
         done();
       });
   });
+
+  it('should POST data and get back interactions')
 
 });
