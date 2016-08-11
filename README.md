@@ -66,3 +66,8 @@ Run test files:
 ``gulp mocha``  
 Run both:  
 ``gulp``  
+
+## Resources  
+- SendGrid: https://sendgrid.com/  
+- Postmark: https://postmarkapp.com/  
+- RxNav Drug Interaction API: https://rxnav.nlm.nih.gov/InteractionAPIs.html
