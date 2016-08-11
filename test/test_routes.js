@@ -12,7 +12,7 @@ process.env.DB_SERVER = TEST_DB_SERVER;
 
 let app = require('./test_server');
 
-let server, userToken, drugId;
+let server, userToken, drugId, userId, newUserId;
 
 describe('testing different routes for our server ', () => {
   before((done) =>{
@@ -46,6 +46,7 @@ describe('testing different routes for our server ', () => {
       .post('/api/user/signup')
       .send({phoneNumber:'123456078'})
       .end((err, res)=>{
+        userId = res.body._id;
         expect(res).to.have.status(400);
         expect(res.text).to.have.string('Nope');
         done();
@@ -150,6 +151,26 @@ describe('testing different routes for our server ', () => {
       .end((err, res) =>{
         expect(res).to.have.status(200);
         expect(res.body).to.eql('Interaction between zocor and Verapamil: The serum concentration of Simvastatin can be increased when it is combined with Verapamil.');
+        done();
+      });
+  });
+
+  it('should GET a drug by id', (done) =>{
+    request('localhost:4001')
+      .get('/api/drug/' + drugId)
+      .end((err, res) =>{
+        console.log('drug ID IS ' + drugId);
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  it('should GET a user by id', (done) =>{
+    request('localhost:4001')
+      .get('/api/user/' + userId)
+      .end((err, res) =>{
+        console.log('user ID IS ' + userId);
+        expect(res).to.have.status(200);
         done();
       });
   });
