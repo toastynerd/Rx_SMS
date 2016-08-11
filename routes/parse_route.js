@@ -39,10 +39,7 @@ const getInteractions = function(phoneEmail, drug) {
 
 parseRouter.post('/', jsonParser, function(req, res, next) {
   let testingIncoming = req.body.HtmlBody.toString();
-  console.log('INCOMING EMAIL FROM TMOBILE: ', testingIncoming.replace(/<[^>]*>?/gm, ''));
-  let preSplit = req.body.HtmlBody.toString().split('<PRE>');
-  let afterSplit = preSplit[1].split('</PRE>');
-  let content = afterSplit[0];
+  let content = testingIncoming.replace(/<[^>]*>?/gm, '');
   let phoneEmail = req.body.From;
   let gridSchema = new GridSchema({'phoneNumber': phoneEmail, 'text': content});
   gridSchema.save((err, grid) => {
