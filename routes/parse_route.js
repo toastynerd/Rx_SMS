@@ -38,6 +38,8 @@ const getInteractions = function(phoneEmail, drug) {
 };
 
 parseRouter.post('/', jsonParser, function(req, res, next) {
+  let testingIncoming = req.body;
+  console.log('INCOMING EMAIL FROM TMOBILE: ', testingIncoming);
   let preSplit = req.body.HtmlBody.toString().split('<PRE>');
   let afterSplit = preSplit[1].split('</PRE>');
   let content = afterSplit[0];
