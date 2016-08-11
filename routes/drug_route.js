@@ -9,9 +9,9 @@ const jsonParser = require('body-parser').json();
 let drugRouter = Router();
 
 drugRouter.post('/newDrug', jsonParser, function(req, res, next) {
-  let errz = HandleError(400, next, 'invalid id');
+  let error = HandleError(400, next, 'invalid id');
   if(!req.body.drug){
-    return errz();
+    return error();
   }
   rxnormidHandler(req.body.drug)
   .then((rxnormId) => {
@@ -28,6 +28,7 @@ drugRouter.post('/newDrug', jsonParser, function(req, res, next) {
   });
 });
 
+//TODO Admin access only OR delete
 drugRouter.get('/allDrugs', function(req, res, next) {
   DrugSchema.find().then(res.json.bind(res), HandleError(500, next, 'Server Error'));
 });
