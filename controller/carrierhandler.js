@@ -4,8 +4,7 @@ module.exports = exports = function(number, cellProvider){
   let carrier = cellProvider.toUpperCase();
   if (carrier === 'AT&T' || carrier === 'ATT') return number + '@txt.att.net';
   if (carrier === 'VERIZON') return number + '@vtext.com';
-  if (carrier === 'T-MOBILE' || carrier === 'TMOBILE') return number + '@tmomail.net';
-  if (carrier === 'T-MOBILE' || carrier === 'TMOBILE') return number + '@tmomail.net';
+  if (carrier === 'T-MOBILE' || carrier === 'TMOBILE') return '+1' + number + '@tmomail.net';
   if (carrier === 'SPRINT') return number + '@pm.sprint.com';
   if (carrier === 'VIRGIN' || carrier === 'VIRGIN MOBILE') return number + '@vmobl.com';
   if (carrier === 'TRACFONE') return number + '@mmst5.tracfone.com';
