@@ -35,7 +35,7 @@ describe('testing different routes for our server ', () => {
       .send({phoneNumber:'1234456', carrier:'sprint', username:'me1', password:'yep'})
       .end((err, res)=>{
         expect(err).to.eql(null);
-        expect(res).tao.have.status(200);
+        expect(res).to.have.status(200);
         expect(res.body).to.have.property('token');
         done();
       });
@@ -132,6 +132,26 @@ describe('testing different routes for our server ', () => {
       });
   });
 
-  it('should POST data and get back interactions')
+  it('should POST data and get back no interactions', (done) =>{
+    request('localhost:4001')
+      .post('/inbound')
+      .send({HtmlBody:'warfarin', From:'1234456@pm.sprint.com'})
+      .end((err, res) =>{
+        expect(res).to.have.status(200);
+        expect(res.body).to.eql('no interactions found');
+        done();
+      });
+  });
+
+  it('should POST data and get back interactions', (done) =>{
+    request('localhost:4001')
+      .post('/inbound')
+      .send({HtmlBody:'warfarin', From:'1234456@pm.sprint.com'})
+      .end((err, res) =>{
+        expect(res).to.have.status(200);
+        expect(res.body).to.eql('no interactions found');
+        done();
+      });
+  });
 
 });

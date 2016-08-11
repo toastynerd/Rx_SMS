@@ -54,7 +54,7 @@ parseRouter.post('/', jsonParser, function(req, res, next) {
       .then((data) => {
         if(data.length === 0) data = 'no interactions found';
         sendGrid(phoneEmail, data);
-        res.json(grid);
+        res.json(data);
       }, (err) => {
         if(err) return HandleError (404, next, err);
       });
