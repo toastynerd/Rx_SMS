@@ -15,13 +15,6 @@ Rx SMS is a back-end drug interaction app using text messaging. New users can cr
 ## Instructions  
 ### Setup  
 NOTE: Replace ``$Content`` with your personalized information  
-- `git clone https://github.com/aliza89p/Rx_SMS.git`  
-
-- `cd` into `Rx_SMS` directory  
-
-- `npm install`
-
-- `nodemon server.js`   
 
 - Create a new user:  
 `http POST rx-sms.herokuapp.com/api/user/newUser phoneNumber=$YourName carrier=$YourPhoneCarrier`
@@ -35,9 +28,21 @@ NOTE: Replace ``$Content`` with your personalized information
 ## Texting  
 - Text a drug name to ``rx.sms.app@gmail.com``  
 
-- Receive a response with any interactions with your saved medications
+- Receive a response containing any interactions with your saved medications
 
-## Dev GET requests  
+## Dev work
+
+- `git clone https://github.com/aliza89p/Rx_SMS.git`  
+
+- `cd` into `Rx_SMS` directory  
+
+- `npm install`  
+
+- `mkdir db`  
+
+- `mongod --dbpath db`  
+
+- New tab: `nodemon server`      
 
 - Get a specified drug's data:  
 ``http GET rx-sms.herokuapp.com/api/drug/$DrugId``  
