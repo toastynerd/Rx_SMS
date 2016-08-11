@@ -17,7 +17,7 @@ const getInteractions = function(phoneEmail, drug) {
     UserSchema.find({'phoneEmail': phoneEmail})
       .then((user) => {
         if(!user) return reject('User not found');
-        let userId = user._id;
+        let userId = user[0]._id;
         let drugName = drug.trim();
         DrugSchema.find({'userId': userId})
           .then((drugs) => {
@@ -42,7 +42,6 @@ parseRouter.post('/', jsonParser, function(req, res, next) {
   let afterSplit = preSplit[1].split('</PRE>');
   let content = afterSplit[0];
   let phoneEmail = req.body.From;
-  console.log('email body: ', content);
   let gridSchema = new GridSchema({'phoneNumber': phoneEmail, 'text': content});
   gridSchema.save((err, grid) => {
     if (err) return next(err);
@@ -61,7 +60,7 @@ parseRouter.get('/test/:phoneEmail/:drug', function(req, res, next) {
   getInteractions(req.params.phoneEmail, req.params.drug)
   .then((data) => {
     if(data.length === 0) data = 'no interactions found';
-    sendGrid(req.params.phoneEmail, data);
+    res.json(data);
   }, (err) => {
     if(err) return HandleError (404, next, err);
   });

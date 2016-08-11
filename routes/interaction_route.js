@@ -9,7 +9,7 @@ const HandleError = require('../controller/errhandler');
 const unique = function(a) {
   return Array.from(new Set(a));
 };
-let parseRouter = Router();
+let interactionRouter = Router();
 
 const getInteractions = function(phoneEmail, drug) {
   return new Promise((resolve, reject) => {
@@ -36,7 +36,7 @@ const getInteractions = function(phoneEmail, drug) {
   });
 };
 
-parseRouter.get('/test/:phoneEmail/:drug', function(req, res, next) {
+interactionRouter.get('/test/:phoneEmail/:drug', function(req, res, next) {
   getInteractions(req.params.phoneEmail, req.params.drug)
   .then((data) => {
     if(data.length === 0) data = 'no interactions found';
@@ -46,7 +46,7 @@ parseRouter.get('/test/:phoneEmail/:drug', function(req, res, next) {
   });
 });
 
-parseRouter.post('/', jsonParser, function(req, res, next) {
+interactionRouter.post('/', jsonParser, function(req, res, next) {
   let preSplit = req.body.HtmlBody.toString().split('<PRE>');
   let afterSplit = preSplit[1].split('</PRE>');
   let content = afterSplit[0];
@@ -66,8 +66,8 @@ parseRouter.post('/', jsonParser, function(req, res, next) {
     });
 });
 
-parseRouter.get('/', function(req, res, next) {
+interactionRouter.get('/', function(req, res, next) {
   GridSchema.find().then(res.json.bind(res), HandleError(500, next, 'Server error!'));
 });
 
-module.exports = exports = parseRouter;
+module.exports = exports = interactionRouter;
