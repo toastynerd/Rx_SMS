@@ -21,7 +21,6 @@ install:
   - npm install -g eslint mocha chai
 before_script: npm install
 script:
-  - npm run test
   - npm run lint
 notifications:
   email: false
