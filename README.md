@@ -2,6 +2,9 @@
 
 [![Build Status](https://travis-ci.org/aliza89p/Rx_SMS.svg?branch=staging)](https://travis-ci.org/aliza89p/Rx_SMS)
 
+## Summary  
+Rx_SMS is a back-end drug interaction app using text messaging. New users can create an account with their cell phone number and provider (e.g. Sprint, T-Mobile, etc.) along with any medications that they take. Users can then send a text from their cell phone with the name of a new drug to see if it interacts with any of their saved medications. Rx SMS will send a text response with details on any drug interactions found.  
+
 <b>Disclaimer</b>: Rx_SMS is intended for educational purposes only. For advice on medications, please consult with a qualified physician.
 
 ## Developers  
@@ -10,54 +13,52 @@
 - Tre Cain  
 
 ## Instructions  
+
+<b>Note</b>: Replace ``$Content`` with your personalized information  
+
 ### Setup  
-1. `git clone https://github.com/aliza89p/Rx_SMS.git`  
 
-2. `cd` into `Rx_SMS` directory  
+- Create a new user:  
+`http POST rx-sms.herokuapp.com/api/user/newUser phoneNumber=$YourName carrier=$YourPhoneCarrier`
 
-3. `npm install`  
-
-4. `mkdir db`  
-
-5. First tab: `mongodb --dbpath db`
-
-6. Second tab: `nodemon server.js`   
-
-### CRUD Requests  
-
-NOTE: Replace ``$Content`` with your personalized information
-
-Create a new user:  
-`http POST rx-sms.herokuapp.com/api/user/newUser name=$YourName phoneNumber=$YourPhoneNumber`
-
-Get specified user's data:  
-``http GET rx-sms.herokuapp.com/api/user/$UserId``  
-
-Get all user data:  
-``http GET rx-sms.herokuapp.com/api/user/allUsers``  
-
-Create a new drug:  
+- Create a new drug:  
 ``http POST rx-sms.herokuapp.com/api/drug/newDrug drug=$Drug``  
 
-Get a specified drug's data:  
+- Save a specified user with specified drug:  
+``http PUT rx-sms.herokuapp.com/api/user/$UserId/drug/$DrugId``    
+
+## Texting  
+- Text a drug name to ``rx.sms.app@gmail.com``  
+
+- Receive a response containing any interactions with your saved medications
+
+## GET Requests  
+
+- Get a specified drug's data:  
 ``http GET rx-sms.herokuapp.com/api/drug/$DrugId``  
 
-Get all drug data:  
-``http GET rx-sms.herokuapp.com/api/drug/allDrugs``  
+- Get a specified user's data:  
+``http GET rx-sms.herokuapp.com/api/user/$UserId``  
 
-Save specified user with specified drug:  
-``http PUT rx-sms.herokuapp.com/api/user/$UserId/drug/$DrugId``  
+## Testing
 
-Get list of all drug names interacting with specified user's saved drugs:  
-``http GET rx-sms.herokuapp.com/api/interactions/$UserId``  
+- `git clone https://github.com/aliza89p/Rx_SMS.git`  
 
-Check for interactions between a specified user's saved drugs and a new drug:  
-``http GET rx-sms.herokuapp.com/api/interactions/$UserId/$NewDrug``
+- `cd` into `Rx_SMS` directory  
 
-## Testing  
-Run linter:  
-``gulp eslint``  
-Run test files:  
-``gulp mocha``  
-Run both:  
-``gulp``  
+- `npm install`  
+
+- `mkdir db`  
+
+- `mongod --dbpath db`  
+
+- Run linter: `gulp eslint`  
+
+- Run test files: `gulp mocha`  
+
+- Run both linter and tests: `gulp`  
+
+## Resources  
+- SendGrid: https://sendgrid.com/  
+- Postmark: https://postmarkapp.com/  
+- RxNav Drug Interaction API: https://rxnav.nlm.nih.gov/InteractionAPIs.html

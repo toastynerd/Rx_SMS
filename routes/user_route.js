@@ -3,6 +3,7 @@
 const Router = require('express').Router;
 const HandleError = require('../controller/errhandler');
 const UserSchema = require('../models/userschema');
+const sendGrid = require('../lib/sendgrid');
 const drugUserRouter = require('./drug_user_route');
 const jsonParser = require('body-parser').json();
 const carrierHandler = require('../controller/carrierhandler');
@@ -10,7 +11,7 @@ const BasicHTTP = require('../lib/http_handle');
 
 let userRouter = Router();
 
-userRouter.post('/newUser', jsonParser, function(req, res, next) {
+userRouter.post('/signup', jsonParser, function(req, res, next) {
   let errz = HandleError(400, next, 'Nope');
 
   if(!req.body.carrier || !req.body.phoneNumber || !req.body.username || !req.body.password){
@@ -18,6 +19,7 @@ userRouter.post('/newUser', jsonParser, function(req, res, next) {
   }
   let email = carrierHandler(req.body.phoneNumber, req.body.carrier);
   let newUser = new UserSchema({'phoneNumber': req.body.phoneNumber, 'carrier': req.body.carrier, 'phoneEmail': email});
+
   newUser.basic.username = req.body.username;
   newUser.basic.password = req.body.password;
   newUser.createHash(req.body.password)
@@ -25,13 +27,10 @@ userRouter.post('/newUser', jsonParser, function(req, res, next) {
       newUser.save().then(() =>{
         console.log(res.body);
         console.log(newUser);
+        sendGrid(newUser.phoneEmail, 'Welcome to Rx_SMS :)\nDisclaimer: This is intended for educational purposes only. For advice on medications, please consult with a qualified physician.');
         res.json(token);
       }, HandleError(400, next));
     }, HandleError(401, next, 'Server Error'));
-});
-
-userRouter.get('/allUsers', function(req, res, next) {
-  UserSchema.find().then(res.json.bind(res), HandleError(400, next, 'Server Error'));
 });
 
 userRouter.get('/signin', BasicHTTP, function(req, res, next) {
