@@ -32,11 +32,12 @@ userRouter.get('/allUsers', function(req, res, next) {
 
 userRouter.get('/signin', BasicHTTP, function(req, res, next) {
   let DBError = HandleError(400, next, 'invalid id');
-  let Err404 = HandleError(404, next, 'could not authorize bitches');
+  let Err404 = HandleError(404, next, 'could not authorize');
   if(!req.auth.username || !req.auth.password) return Err404();
   UserSchema.findOne({'basic.username': req.auth.username})
     .then((user) => {
-      if (!user) return HandleError(401, next, 'COuld not Authorize');
+      if (!user) return Err404();
+      debugger;
       user.comparePass(req.auth.password)
         .then(res.json.bind(res), Err404);
     }, DBError);

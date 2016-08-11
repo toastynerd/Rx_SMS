@@ -12,7 +12,7 @@ process.env.DB_SERVER = TEST_DB_SERVER;
 
 let app = require('./test_server');
 
-let server, userID, drugId;
+let server, userToken, drugId;
 
 describe('testing different routes for our server ', () => {
   before((done) =>{
@@ -32,13 +32,13 @@ describe('testing different routes for our server ', () => {
   it('should create a new user', (done) => {
     request('localhost:4001')
       .post('/api/user/newUser')
-      .send({name: 'Tracey', phoneNumber:'123456078'})
+      .send({phoneNumber:'1234456', carrier:'sprint', username:'me1', password:'yep'})
       .end((err, res)=>{
-        userID = res.body._id;
-        console.log(userID);
+        userToken = res.body.token;
+        console.log(userToken);
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
-        expect(res.body).to.have.property('name');
+        expect(res.body).to.have.property('token');
         done();
       });
   });
@@ -56,22 +56,23 @@ describe('testing different routes for our server ', () => {
 
   it('should GET a new user', (done) => {
     request('localhost:4001')
-      .get('/api/user/' + userID)
+      .get('/api/user/signin')
+      .auth('me1', 'yep')
       .end((err, res)=>{
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
-        expect(res.body).to.have.property('name');
-        expect(res.body.name).to.eql('Tracey');
+        expect(res.body).to.have.property('token');
         done();
       });
   });
 
   it('should not GET a new user', (done) => {
     request('localhost:4001')
-      .get('/api/user/1234')
+      .get('/api/user/signin')
+      .auth('notAUser', 'nope')
       .end((err, res)=>{
-        expect(res).to.have.status(400);
-        expect(res.body).to.have.string('invalid id');
+        expect(res).to.have.status(404);
+        expect(res.body).to.have.string('could not authorize');
         done();
       });
   });
@@ -111,14 +112,14 @@ describe('testing different routes for our server ', () => {
       });
   });
 
-  // it('should not POST a new drug', (done) =>{
-  //   request('localhost:4001')
-  //     .post('/api/drug/newDrug')
-  //     .send({drug: 'nope'})
-  //     .end((err, res)=>{
-  //       expect(res).to.have.status(400);
-  //       done();
-  //     });
-  // });
+  it('should not POST a new drug', (done) =>{
+    request('localhost:4001')
+      .post('/api/drug/newDrug')
+      .send({drug: 'nope'})
+      .end((err, res)=>{
+        expect(res).to.have.status(400);
+        done();
+      });
+  });
 
 });
