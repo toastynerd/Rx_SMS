@@ -13,8 +13,10 @@ Rx_SMS is a back-end drug interaction app using text messaging. New users can cr
 - Tre Cain  
 
 ## Instructions  
-### Setup  
+
 NOTE: Replace ``$Content`` with your personalized information  
+
+### Setup  
 
 - Create a new user:  
 `http POST rx-sms.herokuapp.com/api/user/newUser phoneNumber=$YourName carrier=$YourPhoneCarrier`
@@ -23,14 +25,22 @@ NOTE: Replace ``$Content`` with your personalized information
 ``http POST rx-sms.herokuapp.com/api/drug/newDrug drug=$Drug``  
 
 - Save a specified user with specified drug:  
-``http PUT rx-sms.herokuapp.com/api/user/$UserId/drug/$DrugId``
+``http PUT rx-sms.herokuapp.com/api/user/$UserId/drug/$DrugId``    
 
 ## Texting  
 - Text a drug name to ``rx.sms.app@gmail.com``  
 
 - Receive a response containing any interactions with your saved medications
 
-## Dev work
+## GET Requests  
+
+- Get a specified drug's data:  
+``http GET rx-sms.herokuapp.com/api/drug/$DrugId``  
+
+- Get a specified user's data:  
+``http GET rx-sms.herokuapp.com/api/user/$UserId``  
+
+## Testing
 
 - `git clone https://github.com/aliza89p/Rx_SMS.git`  
 
@@ -42,30 +52,11 @@ NOTE: Replace ``$Content`` with your personalized information
 
 - `mongod --dbpath db`  
 
-- New tab: `nodemon server`      
+- Run linter: `gulp eslint`  
 
-- Get a specified drug's data:  
-``http GET rx-sms.herokuapp.com/api/drug/$DrugId``  
+- Run test files: `gulp mocha`  
 
-- Get all drug data:  
-``http GET rx-sms.herokuapp.com/api/drug/allDrugs``  
-
-- Get list of all drug names interacting with specified user's saved drugs:  
-``http GET rx-sms.herokuapp.com/api/interactions/$UserId``  
-
-- Check for interactions between a specified user's saved drugs and a new drug:  
-``http GET rx-sms.herokuapp.com/api/interactions/$UserId/$NewDrug``
-
-- Get a list of all incoming text data:  
-``http GET rx-sms.herokuapp.com/inbound``
-
-## Testing  
-Run linter:  
-``gulp eslint``  
-Run test files:  
-``gulp mocha``  
-Run both:  
-``gulp``  
+- Run both linter and tests: `gulp`  
 
 ## Resources  
 - SendGrid: https://sendgrid.com/  

@@ -24,11 +24,6 @@ userRouter.post('/newUser', jsonParser, function(req, res, next) {
   });
 });
 
-//TODO Admin access only OR delete
-userRouter.get('/allUsers', function(req, res, next) {
-  UserSchema.find().then(res.json.bind(res), HandleError(400, next, 'Server Error'));
-});
-
 userRouter.get('/:userId', function(req, res, next) {
   let DBError = HandleError(400, next, 'invalid id');
   let Err404 = HandleError(404, next);

@@ -28,11 +28,6 @@ drugRouter.post('/newDrug', jsonParser, function(req, res, next) {
   });
 });
 
-//TODO Admin access only OR delete
-drugRouter.get('/allDrugs', function(req, res, next) {
-  DrugSchema.find().then(res.json.bind(res), HandleError(500, next, 'Server Error'));
-});
-
 drugRouter.get('/:drugId', function(req, res, next) {
   let DBError = HandleError(400, next, 'invalid id');
   let Err404 = HandleError(404, next);

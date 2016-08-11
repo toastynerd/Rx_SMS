@@ -68,9 +68,4 @@ parseRouter.get('/test/:phoneEmail/:drug', function(req, res, next) {
   });
 });
 
-//TODO Admin access only OR delete
-parseRouter.get('/', function(req, res, next) {
-  GridSchema.find().then(res.json.bind(res), HandleError(500, next, 'Server error!'));
-});
-
 module.exports = exports = parseRouter;
