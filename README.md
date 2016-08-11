@@ -11,48 +11,45 @@
 
 ## Instructions  
 ### Setup  
-1. `git clone https://github.com/aliza89p/Rx_SMS.git`  
+NOTE: Replace ``$Content`` with your personalized information  
+- `git clone https://github.com/aliza89p/Rx_SMS.git`  
 
-2. `cd` into `Rx_SMS` directory  
+- `cd` into `Rx_SMS` directory  
 
-3. `npm install`  
+- `npm install`
 
-4. `mkdir db`  
+- `nodemon server.js`   
 
-5. First tab: `mongodb --dbpath db`
+- Create a new user:  
+`http POST rx-sms.herokuapp.com/api/user/newUser phoneNumber=$YourName carrier=$YourPhoneCarrier`
 
-6. Second tab: `nodemon server.js`   
-
-### CRUD Requests  
-
-NOTE: Replace ``$Content`` with your personalized information
-
-Create a new user:  
-`http POST rx-sms.herokuapp.com/api/user/newUser name=$YourName phoneNumber=$YourPhoneNumber`
-
-Get specified user's data:  
-``http GET rx-sms.herokuapp.com/api/user/$UserId``  
-
-Get all user data:  
-``http GET rx-sms.herokuapp.com/api/user/allUsers``  
-
-Create a new drug:  
+- Create a new drug:  
 ``http POST rx-sms.herokuapp.com/api/drug/newDrug drug=$Drug``  
 
-Get a specified drug's data:  
+- Save a specified user with specified drug:  
+``http PUT rx-sms.herokuapp.com/api/user/$UserId/drug/$DrugId``
+
+## Texting  
+- Text a drug name to ``rx.sms.app@gmail.com``  
+
+- Receive a response with any interactions with your saved medications
+
+## Get requests  
+
+- Get a specified drug's data:  
 ``http GET rx-sms.herokuapp.com/api/drug/$DrugId``  
 
-Get all drug data:  
+- Get all drug data:  
 ``http GET rx-sms.herokuapp.com/api/drug/allDrugs``  
 
-Save specified user with specified drug:  
-``http PUT rx-sms.herokuapp.com/api/user/$UserId/drug/$DrugId``  
-
-Get list of all drug names interacting with specified user's saved drugs:  
+- Get list of all drug names interacting with specified user's saved drugs:  
 ``http GET rx-sms.herokuapp.com/api/interactions/$UserId``  
 
-Check for interactions between a specified user's saved drugs and a new drug:  
+- Check for interactions between a specified user's saved drugs and a new drug:  
 ``http GET rx-sms.herokuapp.com/api/interactions/$UserId/$NewDrug``
+
+- Get a list of all incoming text data:  
+``http GET rx-sms.herokuapp.com/inbound``
 
 ## Testing  
 Run linter:  
