@@ -2,10 +2,10 @@
 
 [![Build Status](https://travis-ci.org/aliza89p/Rx_SMS.svg?branch=staging)](https://travis-ci.org/aliza89p/Rx_SMS)
 
-<b>Disclaimer</b>: Rx_SMS is intended for educational purposes only. For advice on medications, please consult with a qualified physician.
-
 ## Summary  
 Rx SMS is a back-end drug interaction app using text messaging. New users can create an account with their cell phone number and provider (e.g. Sprint, T-Mobile, etc.) along with any medications that they take. Users can then send a text from their cell phone with the name of a new drug to see if it interacts with any of their saved medications. Rx SMS will send a text response with details on any drug interactions found.  
+
+<b>Disclaimer</b>: Rx_SMS is intended for educational purposes only. For advice on medications, please consult with a qualified physician.
 
 ## Developers  
 - Aliza Pilisuk  
