@@ -18,7 +18,7 @@ const getInteractions = function(phoneEmail, drug) {
       .then((user) => {
         if(!user) return reject('User not found');
         let userId = user[0]._id;
-        let drugName = drug.trim();
+        let drugName = drug;
         DrugSchema.find({'userId': userId})
           .then((drugs) => {
             if (!drugs) return reject('Drugs not found');
@@ -42,8 +42,10 @@ parseRouter.post('/', jsonParser, function(req, res, next) {
   let removeHtml = testingIncoming.replace(/<[^>]*>?/gm, '');
   let removeTmo = removeHtml.replace('&nbsp;', '');
   let removeDashes = removeTmo.replace(/[-_]/gm, '');
-  let removeNewLines = removeDashes.replace(/(\r\n|\n|\r)/gm, '');
-  let content = removeNewLines.replace('Sent from my mobile.', '');
+  let removeNewLines = removeDashes.replace(/(\r\n|\n|\r|\t)/gm, '');
+  let sprint = removeNewLines.replace('Sent from my mobile.', '');
+  let tmobile = sprint.replace('TMobile', '');
+  let content = tmobile.trim();
   let phoneEmail = req.body.From;
   let gridSchema = new GridSchema({'phoneNumber': phoneEmail, 'text': content});
   gridSchema.save((err, grid) => {
