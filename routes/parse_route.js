@@ -40,7 +40,7 @@ const getInteractions = function(phoneEmail, drug) {
 parseRouter.post('/', jsonParser, function(req, res, next) {
   let testingIncoming = req.body.HtmlBody.toString();
   let removeHtml = testingIncoming.replace(/<[^>]*>?/gm, '');
-  let removeDashes = removeHtml.replace(/-_/gm, '');
+  let removeDashes = removeHtml.replace(/-_(\r\n|\n|\r)/gm, '');
   let content = removeDashes.replace('Sent from my mobile.', '');
   let phoneEmail = req.body.From;
   let gridSchema = new GridSchema({'phoneNumber': phoneEmail, 'text': content});
