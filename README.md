@@ -14,7 +14,7 @@ Rx_SMS is a back-end drug interaction app using text messaging. New users can cr
 
 ## Instructions  
 
-NOTE: Replace ``$Content`` with your personalized information  
+<b>Note</b>: Replace ``$Content`` with your personalized information  
 
 ### Setup  
 
