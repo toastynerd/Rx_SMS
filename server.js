@@ -25,6 +25,6 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.listen(process.env.PORT || 3002, () => {
-  console.log('Server up on ' + (process.env.PORT || 3002));
+app.listen(process.env.PORT || 3003, () => {
+  console.log('Server up on ' + (process.env.PORT || 3003));
 });
