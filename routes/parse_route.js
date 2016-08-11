@@ -25,7 +25,7 @@ const getInteractions = function(phoneEmail, drug) {
             var drugArray = [];
             drugs.forEach(function(item) {
               item.interactions.forEach(function(q) {
-                if (q.drugname === drugName){
+                if (q.drugname.toUpperCase() === drugName.toUpperCase()){
                   drugArray.push('Interaction between ' + item.drug + ' and ' + q.drugname + ': ' + q.interaction);
                 }
               });
@@ -57,6 +57,7 @@ parseRouter.post('/', jsonParser, function(req, res, next) {
   });
 });
 
+//TODO delete => for testing from command line:
 parseRouter.get('/test/:phoneEmail/:drug', function(req, res, next) {
   getInteractions(req.params.phoneEmail, req.params.drug)
   .then((data) => {
@@ -65,10 +66,6 @@ parseRouter.get('/test/:phoneEmail/:drug', function(req, res, next) {
   }, (err) => {
     if(err) return HandleError (404, next, err);
   });
-});
-
-parseRouter.get('/', function(req, res, next) {
-  GridSchema.find().then(res.json.bind(res), HandleError(500, next, 'Server error!'));
 });
 
 module.exports = exports = parseRouter;
