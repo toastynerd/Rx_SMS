@@ -12,6 +12,7 @@ let userRouter = Router();
 
 userRouter.post('/newUser', jsonParser, function(req, res, next) {
   let errz = HandleError(400, next, 'Nope');
+
   if(!req.body.carrier || !req.body.phoneNumber || !req.body.username || !req.body.password){
     return errz();
   }
