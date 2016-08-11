@@ -12,7 +12,7 @@ process.env.DB_SERVER = TEST_DB_SERVER;
 
 let app = require('./test_server');
 
-let server, userToken, drugId;
+let server, userToken, drugId, phoneEmail;
 
 describe('testing different routes for our server ', () => {
   before((done) =>{
@@ -31,11 +31,11 @@ describe('testing different routes for our server ', () => {
   });
   it('should create a new user', (done) => {
     request('localhost:4001')
-      .post('/api/user/newUser')
+      .post('/api/user/signup')
       .send({phoneNumber:'1234456', carrier:'sprint', username:'me1', password:'yep'})
       .end((err, res)=>{
-        userToken = res.body.token;
-        console.log(userToken);
+        phoneEmail = res.body.phoneEmail;
+        console.log(phoneEmail);
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('token');
@@ -59,6 +59,8 @@ describe('testing different routes for our server ', () => {
       .get('/api/user/signin')
       .auth('me1', 'yep')
       .end((err, res)=>{
+        userToken = res.body.token;
+        console.log(userToken);
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('token');
@@ -66,7 +68,7 @@ describe('testing different routes for our server ', () => {
       });
   });
 
-  it('should not GET a new user', (done) => {
+  it('should not GET a new user due to bad credentials', (done) => {
     request('localhost:4001')
       .get('/api/user/signin')
       .auth('notAUser', 'nope')
@@ -77,24 +79,13 @@ describe('testing different routes for our server ', () => {
       });
   });
 
-  it('should GET all users', (done) => {
-    request('localhost:4001')
-      .get('/api/user/allUsers')
-      .end((err, res)=>{
-        expect(err).to.eql(null);
-        expect(res).to.have.status(200);
-        done();
-      });
-  });
-
   it('should POST a new drug', (done) =>{
     request('localhost:4001')
       .post('/api/drug/newDrug')
+      .set('Authorization', 'Bearer ' + userToken)
       .send({drug: 'zocor'})
-      .auth({authorization:'"Bearer ' + userToken +'"'})
       .end((err, res)=>{
         drugId = res.body._id;
-        console.log('drugz are bad' + drugId);
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
         expect(res.body.drug).to.eql('zocor');
@@ -113,11 +104,33 @@ describe('testing different routes for our server ', () => {
       });
   });
 
-  it('should not POST a new drug', (done) =>{
+  it('should not POST a new drug due to no drug being sent', (done) =>{
     request('localhost:4001')
       .post('/api/drug/newDrug')
+      .set('Authorization', 'Bearer ' + userToken)
       .end((err, res)=>{
         expect(res).to.have.status(400);
+        done();
+      });
+  });
+
+  it('should not POST a new drug due to no auth token', (done) =>{
+    request('localhost:4001')
+      .post('/api/drug/newDrug')
+      .set('Authorization', 'Bearer ')
+      .end((err, res)=>{
+        expect(res).to.have.status(401);
+        done();
+      });
+  });
+
+
+  it('should return interaction results between sent drug and saved drugs from parse route', (done) =>{
+    request('localhost:4001')
+      .get('/')
+      .end((err, res) =>{
+        expect(res.text).to.have.string('Welcome to Rx SMS');
+        expect(res).to.have.status(200);
         done();
       });
   });

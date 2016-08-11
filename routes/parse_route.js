@@ -62,15 +62,4 @@ parseRouter.post('/', jsonParser, function(req, res, next) {
   });
 });
 
-//TODO delete => for testing from command line:
-parseRouter.get('/test/:phoneEmail/:drug', function(req, res, next) {
-  getInteractions(req.params.phoneEmail, req.params.drug)
-  .then((data) => {
-    if(data.length === 0) data = 'no interactions found';
-    sendGrid(req.params.phoneEmail, data);
-  }, (err) => {
-    if(err) return HandleError (404, next, err);
-  });
-});
-
 module.exports = exports = parseRouter;
