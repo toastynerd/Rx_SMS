@@ -14,18 +14,21 @@ Rx_SMS is a back-end drug interaction app using text messaging. New users can cr
 
 ## Instructions  
 
-<b>Note</b>: Replace ``$Content`` with your personalized information  
+<b>Note</b>: Replace ``#Content`` with your personalized information  
 
 ### Setup  
 
 - Create a new user:  
-`http POST rx-sms.herokuapp.com/api/user/newUser phoneNumber=$YourName carrier=$YourPhoneCarrier`
+`http POST rx-sms.herokuapp.com/api/user/newUser phoneNumber=#YourName carrier=#YourPhoneCarrier username=#username password=#password`  
 
-- Create a new drug:  
-``http POST rx-sms.herokuapp.com/api/drug/newDrug drug=$Drug``  
+- Sign in as a user:  
+`http -a #username:#password rx-sms.herokuapp.com/api/user/signin`
 
-- Save a specified user with specified drug:  
-``http PUT rx-sms.herokuapp.com/api/user/$UserId/drug/$DrugId``    
+- After signing in, you will get a token. Copy the token and save as environmental variable.:  
+`export TOKEN=#yourToken`  
+
+- Create a new drug and add it to the user:  
+`echo '{"drug":"#drugname"}' | http POST rx-sms.herokuapp.com/api/drug/newDrug authorization:"Bearer $TOKEN"`      
 
 ## Texting  
 - Text a drug name to ``rx.sms.app@gmail.com``  
