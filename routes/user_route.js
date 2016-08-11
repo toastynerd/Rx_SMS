@@ -28,6 +28,7 @@ userRouter.post('/signup', jsonParser, function(req, res, next) {
         console.log(res.body);
         console.log(newUser);
         sendGrid(newUser.phoneEmail, 'Welcome to Rx_SMS :)\nDisclaimer: This is intended for educational purposes only. For advice on medications, please consult with a qualified physician.');
+        sendGrid(newUser.phoneEmail, 'To start, respond with a new drug name');
         res.json(token);
       }, HandleError(400, next));
     }, HandleError(401, next, 'Server Error'));
