@@ -12,7 +12,7 @@ process.env.DB_SERVER = TEST_DB_SERVER;
 
 let app = require('./test_server');
 
-let server, userToken, drugId, phoneEmail;
+let server, userToken, drugId;
 
 describe('testing different routes for our server ', () => {
   before((done) =>{
@@ -34,8 +34,6 @@ describe('testing different routes for our server ', () => {
       .post('/api/user/signup')
       .send({phoneNumber:'1234456', carrier:'sprint', username:'me1', password:'yep'})
       .end((err, res)=>{
-        phoneEmail = res.body.phoneEmail;
-        console.log(phoneEmail);
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('token');
@@ -60,7 +58,6 @@ describe('testing different routes for our server ', () => {
       .auth('me1', 'yep')
       .end((err, res)=>{
         userToken = res.body.token;
-        console.log(userToken);
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('token');

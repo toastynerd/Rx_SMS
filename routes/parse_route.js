@@ -50,7 +50,6 @@ parseRouter.post('/', jsonParser, function(req, res, next) {
   let gridSchema = new GridSchema({'phoneNumber': phoneEmail, 'text': content});
   gridSchema.save((err, grid) => {
     if (err) return next(err);
-    console.log('interaction paramaters: ', grid.phoneNumber, grid.text);
     getInteractions(grid.phoneNumber, grid.text)
       .then((data) => {
         if(data.length === 0) data = 'no interactions found';

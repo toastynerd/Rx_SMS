@@ -24,8 +24,6 @@ userRouter.post('/signup', jsonParser, function(req, res, next) {
   newUser.createHash(req.body.password)
     .then((token) => {
       newUser.save().then(() =>{
-        console.log(res.body);
-        console.log(newUser);
         sendGrid(newUser.phoneEmail, 'Welcome to Rx_SMS :)\nDisclaimer: This is intended for educational purposes only. For advice on medications, please consult with a qualified physician. To start, respond with a new drug name');
         res.json(token);
       }, HandleError(400, next));
