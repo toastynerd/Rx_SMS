@@ -7,6 +7,7 @@ const UserSchema = require('../models/userschema');
 const DrugSchema = require('../models/drugschema');
 const HandleError = require('../controller/errhandler');
 const htmlToText = require('html-to-text');
+const Promise = require('../lib/promise');
 
 let parseRouter = Router();
 
@@ -39,21 +40,23 @@ const getInteractions = function(phoneEmail, drug) {
   });
 };
 
-const providerExtras = function(text) {
-  let content = text.replace(/[-_]/gm, '');
-  let content2 = content.replace('Sent from my mobile.', '');
-  let content3 = content2.replace('TMobile', '');
-  return content3.trim();
+const convertEmailFromHtml = function(string){
+  let content = htmlToText.fromString(string, {
+    wordwrap: null,
+    ignoreImage: true,
+    ignoreHref: true,
+  })
+  .replace(/\(([^()]+)\)/gm, '')
+  .replace('Sent from my mobile.', '')
+  .replace('TMobile', '');
+  return content;
 };
 
 parseRouter.post('/', jsonParser, function(req, res, next) {
-  let htmlContent = req.body.HtmlBody.toString();
-  let textContent = htmlToText.fromString(htmlContent, {
-    wordwrap: null
-  });
-  let finalContent = providerExtras(textContent);
   let phoneEmail = req.body.From;
-  let gridSchema = new GridSchema({'phoneNumber': phoneEmail, 'text': finalContent});
+  let emailContent = convertEmailFromHtml(req.body.HtmlBody.toString());
+  //TODO Handle async before using emailContent in gridSchema
+  let gridSchema = new GridSchema({'phoneNumber': phoneEmail, 'text': emailContent});
   gridSchema.save((err, grid) => {
     if (err) return next(err);
     getInteractions(grid.phoneNumber, grid.text)

@@ -146,7 +146,7 @@ describe('testing different routes for our server ', () => {
   it('should POST data and get back interactions', (done) =>{
     request('localhost:4001')
       .post('/inbound')
-      .send({HtmlBody:'<HTML><HEAD><TITLE></TITLE></HEAD><BODY><P align="left"><FONT face="Verdana" color="#cc0000" size="2">Sent from my mobile.<BR>_____________________________________________________________</FONT></P><PRE>Verapamil</PRE></BODY></HTML>', From:'1234456@pm.sprint.com'})
+      .send({HtmlBody:'<html><head><title>T-Mobile</title></head><body marginwidth="0" marginheight="0" leftmargin="0" topmargin="0" bgcolor="#ffffff"><table border="0" width="600" cellspacing="0" cellpadding="0"><tr><td width="600" colspan="2"><img src="cid:dottedline600.gif" width="600"></td></tr><br><tr><td width="600" colspan="2"><img src="cid:tmobilespace.gif" width="600" height="20"></td></tr><tr><tr><td colspan="1" align="left">Verapamil</td></tr> <TR><TD width=350 colSpan=1><IMG src="cid:tmobilespace.gif" width="350" height="30"></TD></TR><TR></TR><td width="240" bgcolor="#f2f2f2">&nbsp;</td></tr><tr><td width="600" colspan="2"><img src="cid:footer.gif" width="600" height="105"></td></tr></tr><tr><td width="600" colspan="2"><img src="cid:tmobilespace.gif" width="600" height="40"></td></tr></table></body></html>', From:'1234456@pm.sprint.com'})
       .end((err, res) =>{
         expect(res).to.have.status(200);
         expect(res.body).to.eql('Interaction between zocor and Verapamil: The serum concentration of Simvastatin can be increased when it is combined with Verapamil.');
