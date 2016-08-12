@@ -50,26 +50,14 @@ parseRouter.post('/', jsonParser, function(req, res, next) {
   let gridSchema = new GridSchema({'phoneNumber': phoneEmail, 'text': content});
   gridSchema.save((err, grid) => {
     if (err) return next(err);
-    console.log('interaction paramaters: ', grid.phoneNumber, grid.text);
     getInteractions(grid.phoneNumber, grid.text)
       .then((data) => {
         if(data.length === 0) data = 'no interactions found';
         sendGrid(phoneEmail, data);
-        res.json(grid);
+        res.json(data);
       }, (err) => {
         if(err) return HandleError (404, next, err);
       });
-  });
-});
-
-//TODO delete => for testing from command line:
-parseRouter.get('/test/:phoneEmail/:drug', function(req, res, next) {
-  getInteractions(req.params.phoneEmail, req.params.drug)
-  .then((data) => {
-    if(data.length === 0) data = 'no interactions found';
-    sendGrid(req.params.phoneEmail, data);
-  }, (err) => {
-    if(err) return HandleError (404, next, err);
   });
 });
 

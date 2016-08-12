@@ -4,7 +4,6 @@ const Router = require('express').Router;
 const HandleError = require('../controller/errhandler');
 const UserSchema = require('../models/userschema');
 const sendGrid = require('../lib/sendgrid');
-const drugUserRouter = require('./drug_user_route');
 const jsonParser = require('body-parser').json();
 const carrierHandler = require('../controller/carrierhandler');
 const BasicHTTP = require('../lib/http_handle');
@@ -25,10 +24,7 @@ userRouter.post('/signup', jsonParser, function(req, res, next) {
   newUser.createHash(req.body.password)
     .then((token) => {
       newUser.save().then(() =>{
-        console.log(res.body);
-        console.log(newUser);
-        sendGrid(newUser.phoneEmail, 'Welcome to Rx_SMS :)\nDisclaimer: This is intended for educational purposes only. For advice on medications, please consult with a qualified physician.');
-        sendGrid(newUser.phoneEmail, 'To start, respond with a new drug name');
+        sendGrid(newUser.phoneEmail, 'Welcome to Rx_SMS :)\nDisclaimer: This is intended for educational purposes only. For advice on medications, please consult with a qualified physician. To start, respond with a new drug name');
         res.json(token);
       }, HandleError(400, next));
     }, HandleError(401, next, 'Server Error'));
@@ -45,7 +41,5 @@ userRouter.get('/signin', BasicHTTP, function(req, res, next) {
         .then(res.json.bind(res), Err404);
     }, DBError);
 });
-
-userRouter.use('/:userId/drug', drugUserRouter);
 
 module.exports = exports = userRouter;
