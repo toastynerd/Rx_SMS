@@ -146,7 +146,7 @@ describe('testing different routes for our server ', () => {
   it('should POST data and get back interactions', (done) =>{
     request('localhost:4001')
       .post('/inbound')
-      .send({HtmlBody:'verapamil', From:'1234456@pm.sprint.com'})
+      .send({HtmlBody:'<HTML><HEAD><TITLE></TITLE></HEAD><BODY><P align="left"><FONT face="Verdana" color="#cc0000" size="2">Sent from my mobile.<BR>_____________________________________________________________</FONT></P><PRE>Verapamil</PRE></BODY></HTML>', From:'1234456@pm.sprint.com'})
       .end((err, res) =>{
         expect(res).to.have.status(200);
         expect(res.body).to.eql('Interaction between zocor and Verapamil: The serum concentration of Simvastatin can be increased when it is combined with Verapamil.');

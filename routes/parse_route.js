@@ -6,6 +6,8 @@ const sendGrid = require('../lib/sendgrid');
 const UserSchema = require('../models/userschema');
 const DrugSchema = require('../models/drugschema');
 const HandleError = require('../controller/errhandler');
+const htmlToText = require('html-to-text');
+
 let parseRouter = Router();
 
 const unique = function(a) {
@@ -37,17 +39,21 @@ const getInteractions = function(phoneEmail, drug) {
   });
 };
 
+const providerExtras = function(text) {
+  let content = text.replace(/[-_]/gm, '');
+  let content2 = content.replace('Sent from my mobile.', '');
+  let content3 = content2.replace('TMobile', '');
+  return content3.trim();
+};
+
 parseRouter.post('/', jsonParser, function(req, res, next) {
-  let testingIncoming = req.body.HtmlBody.toString();
-  let removeHtml = testingIncoming.replace(/<[^>]*>?/gm, '');
-  let removeTmo = removeHtml.replace(/&nbsp;/gm,'');
-  let removeDashes = removeTmo.replace(/[-_]/gm, '');
-  let removeNewLines = removeDashes.replace(/(\r\n|\n|\r|\t)/gm, '');
-  let sprint = removeNewLines.replace('Sent from my mobile.', '');
-  let tmobile = sprint.replace('TMobile', '');
-  let content = tmobile.trim();
+  let htmlContent = req.body.HtmlBody.toString();
+  let textContent = htmlToText.fromString(htmlContent, {
+    wordwrap: null
+  });
+  let finalContent = providerExtras(textContent);
   let phoneEmail = req.body.From;
-  let gridSchema = new GridSchema({'phoneNumber': phoneEmail, 'text': content});
+  let gridSchema = new GridSchema({'phoneNumber': phoneEmail, 'text': finalContent});
   gridSchema.save((err, grid) => {
     if (err) return next(err);
     getInteractions(grid.phoneNumber, grid.text)
