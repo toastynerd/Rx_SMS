@@ -8,12 +8,16 @@ const DrugSchema = require('../models/drugschema');
 const HandleError = require('../controller/errhandler');
 let parseRouter = Router();
 
+//clever
 const unique = function(a) {
   return Array.from(new Set(a));
 };
 
 const getInteractions = function(phoneEmail, drug) {
   return new Promise((resolve, reject) => {
+    //I don't know that this actually needs to be a promise
+    //or at least you might want it further down the chai, right now
+    //this makes this route feel a little cluttered/pyramid of doomy
     UserSchema.find({'phoneEmail': phoneEmail})
       .then((user) => {
         if(!user) return reject('User not found');
@@ -49,6 +53,8 @@ parseRouter.post('/', jsonParser, function(req, res, next) {
   let phoneEmail = req.body.From;
   let gridSchema = new GridSchema({'phoneNumber': phoneEmail, 'text': content});
   gridSchema.save((err, grid) => {
+    //if you used the promise version of save, you could skip this check and
+    //just pass next as the second argument of the .then call
     if (err) return next(err);
     getInteractions(grid.phoneNumber, grid.text)
       .then((data) => {
@@ -56,6 +62,8 @@ parseRouter.post('/', jsonParser, function(req, res, next) {
         sendGrid(phoneEmail, data);
         res.json(data);
       }, (err) => {
+        //don't need the if check here, if it's calling this function
+        //there is definitely an error
         if(err) return HandleError (404, next, err);
       });
   });

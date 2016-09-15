@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = exports = function(number, cellProvider){
+  //this would be better setup as an object hash map
   let carrier = cellProvider.toUpperCase();
   if (carrier === 'AT&T' || carrier === 'ATT') return number + '@txt.att.net';
   if (carrier === 'VERIZON') return number + '@vtext.com';
